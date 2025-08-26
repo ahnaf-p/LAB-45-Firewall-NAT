@@ -16,9 +16,9 @@ Selasa 26 Agustus 2025
 ![](IMAGES/srcaddress.png)  
      chain=srcnat, Paket keluar LAN > WAN  
      src-address=22.6.8.0/24, Semua IP LAN diproses  
-![](IMAGES/srcaddresslanjutpartduasoalnyarame.png)
-     action=src-nat, Ganti IP sumber paket
-     to-addresses=192.168.87.7, IP publik(WAN) statis yang digunakan
-![](IMAGES/bisaterkoneksikeinternettanpamasqueradecumanminesnyaipnyaharusjangangantigantisolanyastatisjadinantiharusdiubahlagikaloganti.png)
-     Hasilnya semua perangkat di subnet 192.168.88.0/24 akan terlihat keluar ke internet sebagai IP 192.168.87.7
+![](IMAGES/srcaddresslanjutpartduasoalnyarame.png)  
+     action=src-nat, Ganti IP sumber paket  
+     to-addresses=192.168.87.7, IP publik(WAN) statis yang digunakan  
+![](IMAGES/bisaterkoneksikeinternettanpamasqueradecumanminesnyaipnyaharusjangangantigantisolanyastatisjadinantiharusdiubahlagikaloganti.png)  
+     Hasilnya semua perangkat di subnet 192.168.88.0/24 akan terlihat keluar ke internet sebagai IP 192.168.87.7  
      
