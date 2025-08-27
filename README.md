@@ -23,7 +23,7 @@ Selasa 26 Agustus 2025
      Hasilnya semua perangkat di subnet 192.168.88.0/24 akan terlihat keluar ke internet sebagai IP 192.168.87.7  
        
   2. masquerade  
-     NAT otomatis yang mengganti alamat sumber paket dari alamat IP lokal menjadi alamat IP WAN. Dipakai saat semua perangkat di jaringan lokal ingin mengakses internet melalui WAN tanpa konfigurasi IP manual.  
+     NAT otomatis yang mengganti alamat sumber paket dari alamat IP lokal menjadi alamat IP WAN. Untuk menyembunyikan local address dibelik public address yang didapat dari ISP. Dipakai saat semua perangkat di jaringan lokal ingin mengakses internet melalui WAN tanpa konfigurasi IP manual.  
      Contoh penggunaan:  
 ![](IMAGES/masq1.png)  
      chain=src-nat, untuk mengubah alamat sumber paket yang keluar dari router.  
@@ -36,13 +36,16 @@ Selasa 26 Agustus 2025
 ![](IMAGES/pingmasq.png)  
   
   3. accept  
-     Menerima paket tanpa menjalankan NAT. Paket dilewati sehingga tidak diubah alamat IP atau portnya. Digunakan jika ada perangkat di jaringan lokal yang harus tetap menggunakan alamat IP asli saat mengakses internet.  
+     Menerima paket tanpa menjalankan NAT. Paket tidak lanjut ke next firewall rule. Paket dilewati sehingga tidak diubah alamat IP atau portnya. Digunakan jika ada perangkat di jaringan lokal yang harus tetap menggunakan alamat IP asli saat mengakses internet.  
      Contoh penggunaan:  
 ![](IMAGES/)  
 ![](IMAGES/)  
 ![](IMAGES/)  
      Pengujian:  
      Untuk pengujian, cara mudahnya kita bisa lihat di kolom **Bytes** dan **Packets**, jika angkanya terus bertambah, itu tandanya paket aktif/berjalan.  
-![](IMAGES/)
+![](IMAGES/)  
   
-  4. 
+  4. redirect
+     Replace destinasi port dari IP packet dengan yang spesifik dari **to-ports** parameter dan destinasi address ke address dari virtual atau physical interface. Mengaarhkan paket ke router itu sendiri. Semua paket LAN diaarahkan ke router sebelum ke internet.
+     Contoh Penggunaan:
+![](IMAGES/)  
