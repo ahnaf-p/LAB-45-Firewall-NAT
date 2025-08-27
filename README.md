@@ -38,35 +38,40 @@ Selasa 26 Agustus 2025
   3. accept  
      Menerima paket tanpa menjalankan NAT. Paket tidak lanjut ke next firewall rule. Paket dilewati sehingga tidak diubah alamat IP atau portnya. Digunakan jika ada perangkat di jaringan lokal yang harus tetap menggunakan alamat IP asli saat mengakses internet.  
      Contoh penggunaan:  
-![](IMAGES/)  
-![](IMAGES/)  
-![](IMAGES/)  
+![](IMAGES/acchashtagizinadmin.png)  
+![](IMAGES/accdongmin.png)  
      Pengujian:  
      Untuk pengujian, cara mudahnya kita bisa lihat di kolom **Bytes** dan **Packets**, jika angkanya terus bertambah, itu tandanya paket aktif/berjalan.  
-![](IMAGES/)  
+![](IMAGES/natcounters.png)  
   
   4. redirect  
      Replace destinasi port dari IP packet dengan yang spesifik dari **to-ports** parameter dan destinasi address ke address dari virtual atau physical interface. Mengaarhkan paket ke router itu sendiri. Semua paket LAN diarahkan ke router sebelum ke internet.  
      Contoh Penggunaan:  
-![](IMAGES/)
+![](IMAGES/neverssl.png)
 dst-address, IP tujuan paket
 dst-port, port tujuan paket  
 protocol, protokol paket  
-![](IMAGES/)  
+![](IMAGES/neverssl2.png)  
 action=redirect, paket diarahkan ke router sendiri  
 to-ports, port di router yang akan menerima paket (3128 untuk proxy)  
-![](IMAGES/)  
-  6. add-dst-to-address-list  
+![](IMAGES/neverSSL3.png)  
+  5. add-dst-to-address-list  
      Untuk menambah tujuan paket (destination IP) kedalam **address list**. Tidak mengubah paket, hanya mencatat alamat tujuan untuk keperluan firewall, NAT atau monitoring.  
      Contoh penggunaan:  
-![](IMAGES/)  
+![](IMAGES/catetdst.png)  
 dst-address, jika kosong, semua IP tujuan ditambahkan.  
 src-address, jika kosong, semua ip sumber akan ditambahkan.  
-![](IMAGES/)  
-![](IMAGES/)  
-  8. add-src-to-address-list  
+![](IMAGES/catetdst2.png)  
+![](IMAGES/catetdst3.png)  
+  6. add-src-to-address-list  
      Untuk menambahkan alamat sumber ke dalam **address list**. Tidak mengubah paket, hanya mencatat alamat sumber untuk keperluan firewall, NAT, atau monitoring.  
      Contoh penggunaan:  
-![](IMAGES/)  
-![](IMAGES/)  
-![](IMAGES/)  
+![](IMAGES/srcnat.png)  
+![](IMAGES/srcnat2.png)  
+![](IMAGES/srcnat3.png)  
+  7. jump
+     Digunakan untuk melompat ke chai nlain(custom chain). Tujuannya untuk memisahkan rule NAT yang spesifik agar chain utama tetap rapi dan lebih mudah diatur. Jadi NAT tidak di proses di rule utama lagi, tapi di proses di chain target.
+     Contoh Pengunaan:
+![](IMAGES/wellwellwell.png)
+![](IMAGES/srcnatya.png)
+![](IMAGES/srcnatsrcnar.png)  
