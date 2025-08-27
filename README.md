@@ -45,7 +45,28 @@ Selasa 26 Agustus 2025
      Untuk pengujian, cara mudahnya kita bisa lihat di kolom **Bytes** dan **Packets**, jika angkanya terus bertambah, itu tandanya paket aktif/berjalan.  
 ![](IMAGES/)  
   
-  4. redirect
-     Replace destinasi port dari IP packet dengan yang spesifik dari **to-ports** parameter dan destinasi address ke address dari virtual atau physical interface. Mengaarhkan paket ke router itu sendiri. Semua paket LAN diaarahkan ke router sebelum ke internet.
-     Contoh Penggunaan:
+  4. redirect  
+     Replace destinasi port dari IP packet dengan yang spesifik dari **to-ports** parameter dan destinasi address ke address dari virtual atau physical interface. Mengaarhkan paket ke router itu sendiri. Semua paket LAN diarahkan ke router sebelum ke internet.  
+     Contoh Penggunaan:  
+![](IMAGES/)
+dst-address, IP tujuan paket
+dst-port, port tujuan paket  
+protocol, protokol paket  
+![](IMAGES/)  
+action=redirect, paket diarahkan ke router sendiri  
+to-ports, port di router yang akan menerima paket (3128 untuk proxy)  
+![](IMAGES/)  
+  6. add-dst-to-address-list  
+     Untuk menambah tujuan paket (destination IP) kedalam **address list**. Tidak mengubah paket, hanya mencatat alamat tujuan untuk keperluan firewall, NAT atau monitoring.  
+     Contoh penggunaan:  
+![](IMAGES/)  
+dst-address, jika kosong, semua IP tujuan ditambahkan.  
+src-address, jika kosong, semua ip sumber akan ditambahkan.  
+![](IMAGES/)  
+![](IMAGES/)  
+  8. add-src-to-address-list  
+     Untuk menambahkan alamat sumber ke dalam **address list**. Tidak mengubah paket, hanya mencatat alamat sumber untuk keperluan firewall, NAT, atau monitoring.  
+     Contoh penggunaan:  
+![](IMAGES/)  
+![](IMAGES/)  
 ![](IMAGES/)  
