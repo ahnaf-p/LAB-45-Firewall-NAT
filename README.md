@@ -107,23 +107,22 @@ src-address, jika kosong, semua ip sumber akan ditambahkan.
   14. netmap  
       Melakukan perubahan IP Address dengan metode mapping 1:1 yang dapat diterapkan pada SRCNAT maupun DSTNAT. Syarat utamanya kedua subnet harus memiliki prefix atau jumlah host yang sama. Netmap akan memetakan masing-masing IP ke alamat IP subnet lain dengan host yang sama.  
       Contoh penggunaan:  
-![](IMAGES/)  
-![](IMAGES/)  
-![](IMAGES/)  
+![](IMAGES/netmap.png)  
+![](IMAGES/dstnat3.png)  
     
   15. passthrough  
       Membiarkan paket tetap diteruskan ke rule berikutnya tanpa diubah apapun. Jika paket dicheck dan match tetap dilepas ke rule selanjutnya.  
       Contoh penggunaan:  
-![](IMAGES/)  
-![](IMAGES/)  
-![](IMAGES/)  
+![](IMAGES/passthought.png)  
+![](IMAGES/passthought2.png)  
+![](IMAGES/passthought3.png)  
     
   16. return  
       Agar paket berhenti  diperiksa di chain sekarang, lalu balik ke chain asal yang memanggilnya.  Kalau dipakai di chain utama NAT (srcnat dstnat), efeknya hampir sama seperti accept, paket tidak akan di NAT lagi tapi berbeda tempat berhentinya. return fungsinya hanya dipakai kalau ada chain custom.
       Contoh penggunaan:  
-![](IMAGES/)  
-![](IMAGES/)  
-![](IMAGES/)
+![](IMAGES/ret.png)  
+![](IMAGES/qsda.png)  
+![](IMAGES/dASQ.png)
 
 # Kesimpulan
   Berfungsi sebagai mekanisme untuk menerjemahkan alamat IP dan port dari paket data yang melewati router. Proses ini memungkinkan koneksi dari jaringan lokal menuju internet maupun sebaliknya dapat berjalan dengan baik meskipun menggunakan alamat yang berbeda. NAT bekerja dengan cara mengubah alamat sumber (source) pada saat paket keluar dari router melalui chain srcnat, serta dapat mengubah alamat tujuan (destination) pada saat paket masuk melalui chain dstnat.
