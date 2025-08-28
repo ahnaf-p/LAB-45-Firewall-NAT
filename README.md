@@ -5,6 +5,8 @@ Selasa 26 Agustus 2025
   
   
 # Chain  
+![](IMAGES/chain.png)  
+  
   **srcnat**  
     Berfungsi untuk melakukan translasi pada alamat sumber paket data, yaitu alamat IP dari perangkat di jaringan lokal yang hendak keluar menuju jaringan lain, biasanya ke internet.  
       
