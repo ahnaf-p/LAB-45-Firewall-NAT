@@ -11,7 +11,10 @@ Selasa 26 Agustus 2025
   **dstnat**  
     Digunakan untuk melakukan translasi pada alamat tujuan paket data yang masuk ke jaringan melalui router. FUngsinya adalah mengarahkan paket menuju alamat publik tertentu agar diteruskan ke alamat IP private di dalam jaringan.  
   
-# Action
+  **Custom Chain**  
+    Chain tambahan yang bisa kita buat sendiri di firewall NAT Mikrotik. Secara default, NAT hanya punya dua chain utama. Dengan custom chain ini, kita bisa membuat *jalur pemeriksaan tambahan* sesuai kebutuhan.  
+  
+# Action  
   1. src-nat  
      Tindakan NAT yang mengganti IP sumber paket manjadi IP yang ditentukan di **to address** sebelum paket keluar router. Semua paket yang keluar dari jaringan internal (LAN) ke internat akan selalu memakai IP Publik tertentu yang statis. Berbeda dengan masquerade yang dynamic atau netmap. src-nat ditentukan static. Tujuannya agar paket keluar LAN terlihat berasal dari IP publik tertentu.  
      Contoh pengunaan:  
