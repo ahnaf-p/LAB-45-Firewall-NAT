@@ -6,8 +6,10 @@ Selasa 26 Agustus 2025
   
 # Chain  
   **srcnat**  
-    
+    Berfungsi untuk melakukan translasi pada alamat sumber paket data, yaitu alamat IP dari perangkat di jaringan lokal yang hendak keluar menuju jaringan lain, biasanya ke internet.  
+      
   **dstnat**  
+    Digunakan untuk melakukan translasi pada alamat tujuan paket data yang masuk ke jaringan melalui router. FUngsinya adalah mengarahkan paket menuju alamat publik tertentu agar diteruskan ke alamat IP private di dalam jaringan.  
   
 # Action
   1. src-nat  
@@ -55,7 +57,8 @@ protocol, protokol paket
 action=redirect, paket diarahkan ke router sendiri  
 to-ports, port di router yang akan menerima paket (3128 untuk proxy)  
 ![](IMAGES/neverSSL3.png)  
-  5. add-dst-to-address-list  
+  
+  6. add-dst-to-address-list  
      Untuk menambah tujuan paket (destination IP) kedalam **address list**. Tidak mengubah paket, hanya mencatat alamat tujuan untuk keperluan firewall, NAT atau monitoring.  
      Contoh penggunaan:  
 ![](IMAGES/catetdst.png)  
@@ -63,15 +66,64 @@ dst-address, jika kosong, semua IP tujuan ditambahkan.
 src-address, jika kosong, semua ip sumber akan ditambahkan.  
 ![](IMAGES/catetdst2.png)  
 ![](IMAGES/catetdst3.png)  
-  6. add-src-to-address-list  
+    
+  7. add-src-to-address-list  
      Untuk menambahkan alamat sumber ke dalam **address list**. Tidak mengubah paket, hanya mencatat alamat sumber untuk keperluan firewall, NAT, atau monitoring.  
      Contoh penggunaan:  
 ![](IMAGES/srcnat.png)  
 ![](IMAGES/srcnat2.png)  
 ![](IMAGES/srcnat3.png)  
-  7. jump
-     Digunakan untuk melompat ke chai nlain(custom chain). Tujuannya untuk memisahkan rule NAT yang spesifik agar chain utama tetap rapi dan lebih mudah diatur. Jadi NAT tidak di proses di rule utama lagi, tapi di proses di chain target.
-     Contoh Pengunaan:
-![](IMAGES/wellwellwell.png)
-![](IMAGES/srcnatya.png)
+    
+  8. jump  
+     Digunakan untuk melompat ke chai nlain(custom chain). Tujuannya untuk memisahkan rule NAT yang spesifik agar chain utama tetap rapi dan lebih mudah diatur. Jadi NAT tidak di proses di rule utama lagi, tapi di proses di chain target.  
+     Contoh Pengunaan:  
+![](IMAGES/wellwellwell.png)  
+![](IMAGES/srcnatya.png)  
 ![](IMAGES/srcnatsrcnar.png)  
+  
+  9. log  
+     Digunakan  untuk mencatat paket data yang sesuai dengan rule kedalam sistem log router.  Jadi kalau ada paket yang memenuhi kondisi rule misalnya berdasarkan IP, port atau protokol paket itu tidak diubah dan tidak diblokir melainkan hanya dibuatkan catatan di sistem log.  
+     Contoh penggunaan:  
+     Disini saya akan membuat jika IP di network 6.8.22.0/27 mengakses https akan masuk kedalam log.  
+![](IMAGES/https.png)  
+![](IMAGES/https2.png)  
+![](IMAGES/httpslog.png)
+  
+  11. same  
+      Digunakan jika LAN memiliki prefix yang berbeda dengan prefix IP public. same lebih banyak digunakan pada SRCNAT. Salah satunya ketika koneksi client pada service tertentu dibatasi, sehingga digunakan same agar tidak terlalu banyak koneksi client ke arah server.
+      Contoh penggunaan:  
+![](IMAGES/sama.png)  
+![](IMAGES/samasama.png)  
+      Pastikan PC Client yang terhubung bisa akses internet dan di winbox bytes dan packetnya berjalan yang menandakan firewall berfungsi.  
+![](IMAGES/samasamasama.png)
+  
+  13. dst-nat  
+      Dipakai untuk mengarahkan trafik dari IP/Port tertentu ke alamat IP tujuan lain di jaringan lokal. Biasanya dipakai kalau ada server di dalam LAN dan kita ingin akses dari luar.
+      Contoh penggunaan:  
+![](IMAGES/dstnat.png)  
+![](IMAGES/dstnat2.png)  
+![](IMAGES/portforward.png)
+    
+  14. netmap  
+      Melakukan perubahan IP Address dengan metode mapping 1:1 yang dapat diterapkan pada SRCNAT maupun DSTNAT. Syarat utamanya kedua subnet harus memiliki prefix atau jumlah host yang sama. Netmap akan memetakan masing-masing IP ke alamat IP subnet lain dengan host yang sama.  
+      Contoh penggunaan:  
+![](IMAGES/)  
+![](IMAGES/)  
+![](IMAGES/)  
+    
+  15. passthrough  
+      Membiarkan paket tetap diteruskan ke rule berikutnya tanpa diubah apapun. Jika paket dicheck dan match tetap dilepas ke rule selanjutnya.  
+      Contoh penggunaan:  
+![](IMAGES/)  
+![](IMAGES/)  
+![](IMAGES/)  
+    
+  16. return  
+      Agar paket berhenti  diperiksa di chain sekarang, lalu balik ke chain asal yang memanggilnya.  Kalau dipakai di chain utama NAT (srcnat dstnat), efeknya hampir sama seperti accept, paket tidak akan di NAT lagi tapi berbeda tempat berhentinya. return fungsinya hanya dipakai kalau ada chain custom.
+      Contoh penggunaan:  
+![](IMAGES/)  
+![](IMAGES/)  
+![](IMAGES/)
+
+# Kesimpulan
+  Berfungsi sebagai mekanisme untuk menerjemahkan alamat IP dan port dari paket data yang melewati router. Proses ini memungkinkan koneksi dari jaringan lokal menuju internet maupun sebaliknya dapat berjalan dengan baik meskipun menggunakan alamat yang berbeda. NAT bekerja dengan cara mengubah alamat sumber (source) pada saat paket keluar dari router melalui chain srcnat, serta dapat mengubah alamat tujuan (destination) pada saat paket masuk melalui chain dstnat.
